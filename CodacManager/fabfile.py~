@@ -1,0 +1,42 @@
+#!/usr/bin/env python 
+
+from fabric.api import *  
+from fabric.context_managers import *  
+from fabric.contrib.console import confirm  
+
+
+host_1 = '10.136.64.101'
+host_2 = '10.136.64.102'
+host_3 = '10.136.64.103'
+host_4 = '10.136.64.112'
+host_5 = '10.136.64.114'
+
+env.passwords = {
+		host_1 : 'operator@htscl',
+		host_2 : 'core09',
+		host_3 : 'core09',
+		host_4 : 'core09',
+		host_5 : 'core09',
+		}
+
+@serial
+def ArchiveConfig():
+	with cd('~/Desktop/'):
+		with settings(
+				host_string = host_5,
+				warn_only = True,
+				):
+			date = run('pwd')
+	return date
+
+@serial
+def test():
+	with cd('~/Desktop/'):
+		with settings(
+				host_string = host_5,
+				warn_only = True,
+				):
+			date = run('pwd')
+	return date
+
+

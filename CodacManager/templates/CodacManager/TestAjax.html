@@ -1,0 +1,57 @@
+
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+<script type="text/javascript">
+function submitClicked(obj)	
+{
+
+	document.getElementById('clicked_input').setAttribute('value', obj.value);
+//	alert(obj.value); 
+}
+</script>
+
+<script>
+	$(document).ready(function(){
+		$.ajaxSetup({
+			data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+		});
+
+		$('#formadd').submit(function(){
+			var name = $("#id_name").val();                 //获得form中用户输入的name 注意这里的id_name 与你html中的id一致
+			var password = $("#id_password").val();    //同上 
+			var clicked_input = $('#clicked_input').val();
+
+			$.ajax({
+				type:"POST",
+				data: {'name':name, 'password':password, 'clicked_input': clicked_input},
+				url: "{% url 'TestAjax' %}", //后台处理函数的url 这里用的是static url 需要与urls.py中的name一致
+				cache: false,
+				dataType: "html",
+				success: function(result, statues, xml){
+					$('#label').attr('value', result)
+					$('#label').attr('style', 'background-color:red')
+				},
+				error: function(){
+					alert("false");
+				}
+			});
+			return false;
+		});
+
+	});
+</script>
+
+
+<form method="post" id="formadd">
+	{% csrf_token %}
+	<input name='clicked_input' id='clicked_input' value='clicked_value' style='display:none'/>
+
+	<label for="id_name">用户名</label>
+	<input type="text" id="id_name"/>
+	<label for = "id_password">密码</label>
+	<input type="password" id="id_password"/>
+	<button type="submit" name="submit_1" value='submit 1' onclick='submitClicked(this)' >提交1</button>
+	<button type="submit" name="submit_2" value='submit 2' onclick='submitClicked(this)' >提交2</button>
+	<div> <input value='aaa' id='label'/> </div>
+</form>

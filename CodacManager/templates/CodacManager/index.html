@@ -1,0 +1,99 @@
+{% extends "CodacManager/base.html" %}
+
+{% block homepage %} 
+<a class="codrops-icon codrops-icon-prev" href="{% url 'index' %}" ><span><strong>Home</strong></span></a>
+{% endblock %}
+{% block Logoutpage %}
+<span class="right"><a href="{% url 'index' %}"><span>Logout</span></a></span>
+{% endblock %} 
+
+{% block main_menu %}
+<a href="{% url 'PIDConfigure' %}">PID Configuration</a>
+<a href="{% url 'IOCStartStop' %}">IOC Run/Stop</a>
+<a href="{% url 'ArchiveEngineConfigure' %}">Archive Configuration</a> 
+<a href="{% url 'ArchiveEngineRunStop' %}">Archive Run/Stop</a> 
+
+{% endblock %}
+
+{% block main_page %}
+<p><strong>Wellcome !</strong> </p>
+<p>Please Identify yourself first</p>
+<p/><p/><p/>
+<p>username : <input> </input></p>
+<p>password : <input> </input></p>
+<p align='center'><input type='button' value='Login'> </input></p> 
+{% endblock %}
+
+{% block slide_menu %}
+<div class="mp-level">
+	<h2 class="icon icon-world">All Categories</h2>
+	<ul>
+		<li class="icon icon-arrow-left">
+			<a class="icon icon-news" href="#">Hardware</a>
+			<div class="mp-level">
+				<h2 class="icon icon-news">Hardware</h2>
+				<ul>
+					<li><a href="#">Healty Monitor</a></li>
+					<li><a href="#">Service Monitor</a></li>
+				</ul>
+			</div>
+		</li>
+		<li class="icon icon-arrow-left">
+			<a class="icon icon-wallet" href="#">IOC</a>
+			<div class="mp-level">
+				<h2 class="icon icon-news">IOC</h2>
+				<ul>
+					<li><a href="{% url 'IOCInstall' %}">Install IOC</a></li>
+					<li><a href="{% url 'IOCStartStop' %}">Start/Stop IOC</a></li>
+				</ul>
+			</div>
+		</li>
+		<li class="icon icon-arrow-left">
+			<a class="icon icon-wallet" href="#">OPI</a>
+			<div class="mp-level">
+				<h2 class="icon icon-news">OPI</h2>
+				<ul>
+					<li><a href="{% url 'OPIDistribution' %}">Distribute OPI</a></li>
+				</ul>
+			</div>
+		</li>
+		<li class="icon icon-arrow-left">
+			<a class="icon icon-wallet" href="#">Archive</a>
+			<div class="mp-level">
+				<h2 class="icon icon-news">Archive</h2>
+				<ul>
+					<li><a href="{% url 'ArchiveEngineRunStop' %}">Engine Start/Stop</a></li>
+					<li><a href="{% url 'ArchiveEngineConfigure' %}">Archive Configure</a></li>
+					<li><a href="#">Database Backup</a></li>
+				</ul>
+			</div>
+		</li>
+		<li>
+			<a class="icon icon-news" href="{% url 'PIDConfigure' %}">PID</a>
+		</li>
+		<li class="icon icon-arrow-left">
+			<a class="icon icon-wallet" href="#">Web Server</a>
+			<div class="mp-level">
+				<h2 class="icon icon-news">Web Server</h2>
+				<ul>
+					<li><a href="#">Web OPI</a></li>
+					<li><a href="#">VNC Server</a></li>
+				</ul>
+			</div>
+		</li>
+		<li class="icon icon-arrow-left">
+			<a class="icon icon-wallet" href="#">Name Alias</a>
+			<div class="mp-level">
+				<h2 class="icon icon-news">Name Alias</h2>
+				<ul>
+					<li><a href="#">Edit Name Alias</a></li>
+				</ul>
+			</div>
+		</li>
+		<li>
+			<a class="icon icon-news" href="http://127.0.0.1:8000/admin/">Administrator</a>
+		</li>
+	</ul>
+</div>
+{% endblock %}
+

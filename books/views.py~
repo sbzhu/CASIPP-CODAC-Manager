@@ -1,0 +1,14 @@
+# views.py
+from django.views.generic import ListView
+from books.models import Publisher, Author
+
+class PublisherList(ListView):
+    model = Publisher
+
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+class AuthorCreate(CreateView):
+    model = Author
+    fields = ['name']
+
+from .forms import NameForm
+

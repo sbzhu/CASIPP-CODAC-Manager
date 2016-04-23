@@ -1,0 +1,44 @@
+
+{% extends "CodacManager/index.html" %}
+
+{% block main_page %}<script>
+function ChangeColor(obj)
+{
+	if(obj.style.color=="black")
+	{
+		obj.style.color="red"; 
+	}         
+	else
+	{
+		obj.style.color="black";
+	}
+}
+</script>
+<form action="{% url 'ArchiveEngineRunStop' %}" method="post">
+	{% csrf_token %} 
+	<input name='callback' value='true' style='display:none'/>
+
+	<p align='center'>Run/Stop the Archive Server</p>
+	<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="80%" color=#987cb9 SIZE=3>
+	
+		{% for server in serverList %}
+		<button value='{{ server }}' onclick='ChangeColor(this)' />
+		{% endfor %}
+
+	<p/>
+	<div align='center'>
+		<select>
+			<option value ="start">Start Archive</option>
+			<option value ="stop">Stop Archive</option>
+		</select>
+		<input type="submit" value="GO"/>
+	</div>
+
+</form>
+
+{% endblock %}
+
+<button onclick='a()' id='id1'>点击这里！</button>
+
+
+

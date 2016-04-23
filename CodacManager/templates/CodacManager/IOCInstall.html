@@ -1,0 +1,40 @@
+
+{% extends "CodacManager/index.html" %}
+
+{% block main_page %}
+<form action="{% url 'IOCInstall' %}" method="post">
+	{% csrf_token %} 
+	<input name='callback' value='true' style='display:none'/>
+
+	<!--h1>Install the IOCs from sdd project to host</h1-->
+	<!-- Contenedor -->
+	<strong>SDD MVN space should be {{ sddPrjInfo.workDir}}</strong>
+	<ul id="sddPrjList">
+		{% for prj in sddPrjInfo.sddPrjList %}
+		<li>
+		<input type='checkbox' name='{{ prj.prjName }}_{{ prj.host}}'> &nbsp&nbsp {{ prj.prjName }} on {{ prj.host}}</input>
+			<ul> 
+				{% for rpm in prj.rpmList %}
+				<li><input type='checkbox' name='sel_rpm' value='{{ rpm }}_{{ prj.prjName }}_{{ prj.host}}'> &nbsp&nbsp {{ rpm }} </input> </li> 
+				{% endfor %} 
+			</ul> 
+		</li>
+		{% endfor %} 
+	</ul>
+	<div align='center'>
+		<p><strong>The target host to install :</strong></p>
+		{% for server in IocServerList %}
+		<strong>{{ server.user }}@{{ server.ip }}&nbsp&nbsp&nbsp</strong><input name='sel_srv' value='{{ server.user }}@{{ server.ip}}' type='checkbox' checked='true'>&nbsp&nbsp&nbsp&nbsp
+		{% endfor %} 
+	</div>
+	<div align='center'>
+		<p/>
+		<p><input type="submit" value="GO"/></p>
+	</div>
+
+</form> 
+
+{% endblock %}
+
+{% block main_menu %}
+{% endblock %}

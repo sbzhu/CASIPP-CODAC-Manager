@@ -1,0 +1,71 @@
+
+{% extends "CodacManager/index.html" %}
+
+{% block main_page %}
+<form method="post" id="main_form">
+	{% csrf_token %} 
+	<input name='callback' value='true' style='display:none'/>
+
+	<h1>Install the Archive Configuration File </h1>
+	<h3>Source</h3>
+	<div align='center'> 
+		<strong>Host : </strong><input size='40' id='sourceHost' name='sourceHost' value='codac-dev@10.136.64.112'></input>
+	</div>
+	<div align='center'> 
+		<strong>Path : </strong><input size='40' id='sourcePath' name='sourcePath' value='/home/codac-dev/Archive-Workspace/TF_Partial_retest_beauty.xml'></input>
+	</div>
+
+	<h3>Target</h3>
+	<div align='center'>
+		{% for server in serverList %}
+		<div>
+			<strong>{{ server.ip }}&nbsp&nbsp&nbsp</strong><input name='check_{{ forloop.counter0 }}' type='checkbox' checked='true'>&nbsp&nbsp&nbsp&nbsp
+		</div>
+		{% endfor %} 
+	</div>
+	<p/>
+	<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="80%" color=#987cb9 SIZE=3>
+	<p/>
+	<div align='center'>
+		<input type="submit" value="Submit"/>
+	</div>
+
+</form>
+
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+<script>
+	$(document).ready(function(){
+		$.ajaxSetup({
+			data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+		});
+
+		$('#main_form').submit(function(){
+			var sourceHost = $('#sourceHost').val();
+			var sourceHost = $('#sourcePath').val();
+
+			$.ajax({
+				type:"POST",
+				data: {'sourceHost': sourceHost, 'sourcePath': sourcePath},
+				url: "{% url 'ArchiveEngineConfigure' %}", 
+				cache: false,
+				async: false,
+				dataType: "html",
+				success: function(result, statues, xml){
+					$('#main_form')[0].reset();  
+//					$('#' + clicked_ioc_id).attr('style', 'width:300px;background-color:' + result);
+					alert('aaaaa');
+				},
+				error: function(){
+					alert("ajax error");
+				}
+			});
+			return false;
+		});
+
+	});
+</script>
+
+
+{% endblock %}

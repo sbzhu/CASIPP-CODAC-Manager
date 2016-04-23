@@ -1,0 +1,79 @@
+
+{% extends "CodacManager/index.html" %}
+
+{% block main_page %}
+
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+<script type="text/javascript">
+	function submitClicked(obj)	
+	{
+
+		document.getElementById('clicked_ioc').setAttribute('value', obj.name);
+		document.getElementById('clicked_ioc_id').setAttribute('value', obj.id);
+	}
+</script>
+
+<script>
+	$(document).ready(function(){
+		$.ajaxSetup({
+			data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+		});
+
+		$('#main_form').submit(function(){
+			var clicked_ioc = $('#clicked_ioc').val()
+			var clicked_ioc_id = $('#clicked_ioc_id').val()
+			var statu = confirm("Are you sure to change this IOC's status :" + clicked_ioc + " ?");
+			if(!statu) return false;
+
+
+			$.ajax({
+				type:"POST",
+				data: {'clicked_ioc': clicked_ioc},
+				url: "{% url 'IOCStartStop' %}", 
+				cache: false,
+				async: false,
+				dataType: "html",
+				success: function(result, statues, xml){
+					$('#main_form')[0].reset();  
+					$('#' + clicked_ioc_id).attr('style', 'width:300px;background-color:' + result);
+					//alert(result)
+				},
+				error: function(){
+					alert("ajax error");
+				}
+			});
+			return false;
+		});
+
+	});
+</script>
+
+<h3 align='center'> Click to switch the IOC status. Carefull : look before you leap !!! </h3> 
+
+<form method="post" id="main_form">
+	{% csrf_token %}
+	<input id='clicked_ioc' name='clicked_ioc' value=''style='display:none'/>
+	<input id='clicked_ioc_id' name='clicked_ioc_id' value='' style='display:none'/>
+	<ul>
+		{% for iocsOnHost in iocInfoList %}
+		<li> 
+		<div>{{ iocsOnHost.host }}</div>
+		{% for iocInfo in iocsOnHost.iocList %}
+		<input type='submit' id='ioc_{{ forloop.counter0 }}' name='{{ iocInfo.ioc }}_{{ iocsOnHost.host }}' 
+		value="{{ iocInfo.ioc }}" style='background:{{ iocInfo.status }}; width:300px' onclick='submitClicked(this)'/>
+		{% endfor %}
+		</li>
+
+		{% endfor %}
+	</ul> 
+</form>
+
+
+{% endblock %}
+
+{% block main_menu %}
+{% endblock %}
+
+

@@ -1,0 +1,55 @@
+
+{% extends "CodacManager/index.html" %}
+
+{% block main_page %}
+<form action="{% url 'OPIDistribution' %}" method="post">
+	{% csrf_token %} 
+	<input id='sel_prj' name='sel_prj' value='' style='display:none'/>
+
+	<h2 align='center'> Update the OPI to OPI Clients </h2><p/>
+	<table align='center'>
+		<th>
+			<td align='center'>IP</td>
+			<td align='center'>User</td>
+			<td align='center'>Chose</td>
+		</th>
+		{% for host in hostList %}
+		<tr>
+			<td/>
+				<td><input readonly='true' type="text" value='{{ host.ip}}' /></td>
+				<td><input readonly='true' type="text" value='{{ host.user }}' /></td>
+				<td align='center'><input size='20' name="check_target" type="checkbox" value="{{ host.user }}@{{ host.ip}}"/></td>
+			</tr>
+			{% endfor %}
+
+		</table>
+		<p/>
+		<div align='center'>
+			<strong>Source : {{ workDir }}</strong> 
+			<select onchange='SetSelPrj(this)'>
+				<option value ="">----------------</option>
+				{% for cssPrjInfo in cssPrjList %}
+				<strong><optgroup label='{{ cssPrjInfo.host }}'></strong>
+					{% for cssPrj in cssPrjInfo.prjList %}
+					<option value ="{{ cssPrjInfo.host }}:{{ cssPrj }}">{{ cssPrj }}</option>
+					{% endfor %}
+				</optgroup>
+				{% endfor %}
+			</select>
+
+			<p/><p><input type="submit" value="Update"/></p>
+		</div>
+
+
+	</form>
+
+	<script> 
+		function SetSelPrj(obj){ 
+			var index = obj.selectedIndex; 
+			//alert(obj.options[index].value); 
+			//alert(obj.options[index].text); 
+			document.getElementById('sel_prj').value = (obj.options[index].value);
+			//alert(document.getElementById('sel_prj').value); 
+		} 
+	</script>
+	{% endblock %}

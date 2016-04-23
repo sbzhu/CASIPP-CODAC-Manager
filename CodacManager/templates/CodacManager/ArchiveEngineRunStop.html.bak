@@ -1,0 +1,30 @@
+
+{% extends "CodacManager/index.html" %}
+
+{% block main_page %}<script>
+	function ChangeColor(obj)
+	{
+		if(obj.style.backgroundColor = 'green')
+		{
+			obj.style.backgroundColor = "red"; 
+		}         
+		else
+		{
+			obj.style.backgroundColor = "green";
+		}
+	}
+</script>
+<p align='center'>Run/Stop the Archive Server</p>
+<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="80%" color=#987cb9 SIZE=3>
+
+<h3 align='center'> Click to switch the status <h3>
+{% for server, status in serverList.items %}
+<div align='center'>
+	<input type='button' value="{{ server }}" style='background:{{ status }}' onclick='ChangeColor(this)'/>
+</div>
+{% endfor %}
+
+{% endblock %}
+
+
+

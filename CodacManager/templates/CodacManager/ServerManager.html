@@ -1,0 +1,36 @@
+﻿
+{% load staticfiles %}
+<link type="text/css" href="{% static 'CodacManager/css/jquery.spider.disk.css' %}" rel="stylesheet">
+<script type="text/javascript" src="{% static 'CodacManager/js/jquery-1.4.2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'CodacManager/js/jquery.spider.disk.js' %}"></script>
+<script type="text/javascript">
+var data1={total:'1T',users:'500G',peruser:'50%',disks:[
+{id:'10000',name:'C：/',value:'50',total:'500G'},
+{id:'10001',name:'D：/',value:'20',total:'500G'},
+{id:'10002',name:'E：/',value:'10',total:'500G'},
+{id:'10003',name:'F：/',value:'10',total:'500G'},
+{id:'10004',name:'G：/',value:'10',total:'500G'}]}; 
+
+var data2={total:'1T',users:'500G',peruser:'50%',disks:[
+{id:'10000',name:'C：/',value:'90',total:'500G'},
+{id:'10001',name:'D：/',value:'20',total:'500G'},
+{id:'10002',name:'E：/',value:'50',total:'500G'},
+{id:'10003',name:'F：/',value:'50',total:'500G'},
+{id:'10004',name:'G：/',value:'85',total:'500G'}]}; 
+
+
+$(document).ready(function(){
+	refresh(data1);
+});
+function refresh(data){
+	$("#disk_a").disk("poll1",{
+		title:'Useage of disk',
+		titleColor:'#ff6600',
+		width:'100%',
+		data:data
+	});	
+}
+</script>
+<div class="formbody"><div id="disk_a"></div></div>
+<!--demo end-->
+

@@ -1,0 +1,29 @@
+<html>
+	<head>
+		<h1 align='center'>PID Setup</h1>
+	</head>
+<body>
+	<form action="/cgi-bin/python.py" method="post">
+		<table align='center'>
+			<th>
+				<td align='center'>INP</td>
+				<td align='center'>OUT</td>
+			</th>
+			<tr>
+				<td>PID-00</td>
+				<td><input type="text" name="pid_00_inp" value='MAG-FDR-STT:RTD1-0'/></td>
+				<td><input type="text" name="pid_00_out" value='MAG-FDR-CNF:AO1-0'/></td>
+			</tr>
+			{% for pidConfigure in pidConfigures %}
+			<tr>
+				<td>{{ pidConfigure }}</td>
+				<td><input type="text" name="pid_00_inp" value={{ pidConfigure.inp }}/></td>
+				<td><input type="text" name="pid_00_out" value={{ pidConfigure.out }}/></td>
+			</tr>
+			{% endfor %}
+		</table>
+
+		<div align='center'><input type="submit" value="Submit"/></div>
+	</form>
+</body>
+</html>

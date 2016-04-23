@@ -1,0 +1,30 @@
+
+{% extends "CodacManager/index.html" %}
+
+{% block main_page %}
+<form action="{% url 'PIDConfigure' %}" method="post">
+	{% csrf_token %} 
+	<input name='callback' value='true' style='display:none'/>
+
+	<table align='center'>
+		<th>
+			<td align='center'>INP</td>
+			<td align='center'>OUT</td>
+		</th>
+
+		{% for pidConfigure in pidConfigureList %}
+		<tr>
+			<td>PID {{ forloop.counter0 }}</td>
+			<td><input type="text" name="pid_{{ forloop.counter0 }}_inp" value='{{ pidConfigure.inp }}' /></td>
+			<td><input type="text" name="pid_{{ forloop.counter0 }}_out" value='{{ pidConfigure.out }}' /></td>
+		</tr>
+		{% endfor %}
+
+	</table>
+
+	<p/>
+	<div align='center'><input type="submit" value="Submit"/></div>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,8 @@
+li a {
+    font-size : 28px;
+}
+
+body {
+    background : white url("images/background.png");
+	background-size : 100%;
+}

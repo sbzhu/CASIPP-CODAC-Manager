@@ -1,0 +1,57 @@
+
+{% extends "CodacManager/index.html" %}
+
+{% block main_page %}
+<head>
+	<script>
+		// change color
+		function SwitchStatus(obj)
+		{
+			document.getElementById('clicked_ioc').setAttribute('value', obj.value);
+			if(window.confirm("Are you srue to swithc the IOC status " + ioc_host + " ?"))
+			{
+				document.getElementById('form').submit();
+			} 
+		}
+	</script>
+
+	{% load staticfiles %}
+
+	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+	<script>
+		// wait for the DOM to be loaded
+		$(document).ready(function() {
+			// bind 'myForm' and provide a simple callback function
+			$('#form').ajaxForm(function() {
+				alert("Thank you for your comment!");
+			});
+		});
+	</script>
+</head>
+
+<h3 align='center'> Click to switch the IOC status </h3> 
+
+<form action="#" name='form' id='form' method="post">
+	{% csrf_token %} 
+	<input id='clicked_ioc' name='clicked_ioc' value='' style='display:none'/>
+	<ul>
+		{% for iocsOnHost in iocInfoList %}
+		<li> 
+		<div>{{ iocsOnHost.host }}</div>
+		{% for iocInfo in iocsOnHost.iocList %}
+		<input id='{{ iocInfo.ioc }}_{{ iocsOnHost.host }}' type='button' name='{{ iocInfo.ioc }}_{{ iocsOnHost.host }}' value="{{ iocInfo.ioc }}" 
+		style='background:{{ iocInfo.status }}; width:300px' onclick='SwitchStatus(this)'/>
+		{% endfor %}
+		</li>
+
+		{% endfor %}
+	</ul> 
+</form>
+
+{% endblock %}
+
+{% block main_menu %}
+{% endblock %}
+
